@@ -6,7 +6,6 @@ import {
   Image,
   ImageBackground,
   ImageSourcePropType,
-  StyleSheet,
   Text,
   View,
 } from "react-native";
@@ -101,4 +100,4 @@ const _Layout = () => {
 
 export default _Layout;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});
