@@ -6,14 +6,7 @@ import { fetchMovies } from "@/services/api";
 import { updateSearchCount } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import React, { useEffect } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -26,10 +19,8 @@ const Search = () => {
   } = useFetch(() => fetchMovies({ query: searchQuery }), false);
 
   useEffect(() => {
-    movies && movies.length > 0 && updateSearchCount(searchQuery, movies[0]);
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
-        // Refetch movies when search query changes
         await loadMovies();
       } else {
         reset();
@@ -37,6 +28,13 @@ const Search = () => {
     }, 500);
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (movies?.length > 0 && movies?.[0]) {
+      updateSearchCount(searchQuery, movies[0]);
+    }
+  }, [movies]);
+
   return (
     <View className="flex-1 bg-primary">
       <Image
@@ -104,5 +102,3 @@ const Search = () => {
 };
 
 export default Search;
-
-const styles = StyleSheet.create({});
